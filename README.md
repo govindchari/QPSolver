@@ -1,3 +1,3 @@
-# quadprog
+# QPSolver
 
 A C++ solver for quadratic programs
