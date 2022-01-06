@@ -57,33 +57,13 @@ RM = /Applications/CMake.app/Contents/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/govindchari/Desktop/git/quadprog
+CMAKE_SOURCE_DIR = /Users/govindchari/Desktop/git/QPSolver
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/govindchari/Desktop/git/quadprog/build
+CMAKE_BINARY_DIR = /Users/govindchari/Desktop/git/QPSolver/build
 
 #=============================================================================
 # Targets provided globally by CMake.
-
-# Special rule for the target package
-package: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool..."
-	/Applications/CMake.app/Contents/bin/cpack --config ./CPackConfig.cmake
-.PHONY : package
-
-# Special rule for the target package
-package/fast: package
-.PHONY : package/fast
-
-# Special rule for the target package_source
-package_source:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool for source..."
-	/Applications/CMake.app/Contents/bin/cpack --config ./CPackSourceConfig.cmake /Users/govindchari/Desktop/git/quadprog/build/CPackSourceConfig.cmake
-.PHONY : package_source
-
-# Special rule for the target package_source
-package_source/fast: package_source
-.PHONY : package_source/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -107,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/govindchari/Desktop/git/quadprog/build/CMakeFiles /Users/govindchari/Desktop/git/quadprog/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/govindchari/Desktop/git/QPSolver/build/CMakeFiles /Users/govindchari/Desktop/git/QPSolver/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/govindchari/Desktop/git/quadprog/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/govindchari/Desktop/git/QPSolver/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -137,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named quadprog
+# Target rules for targets named QPSolver
 
 # Build rule for target.
-quadprog: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 quadprog
-.PHONY : quadprog
+QPSolver: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 QPSolver
+.PHONY : QPSolver
 
 # fast build rule for target.
-quadprog/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/quadprog.dir/build.make CMakeFiles/quadprog.dir/build
-.PHONY : quadprog/fast
+QPSolver/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QPSolver.dir/build.make CMakeFiles/QPSolver.dir/build
+.PHONY : QPSolver/fast
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/quadprog.dir/build.make CMakeFiles/quadprog.dir/src/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QPSolver.dir/build.make CMakeFiles/QPSolver.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -162,7 +142,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/quadprog.dir/build.make CMakeFiles/quadprog.dir/src/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QPSolver.dir/build.make CMakeFiles/QPSolver.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -170,7 +150,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/quadprog.dir/build.make CMakeFiles/quadprog.dir/src/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QPSolver.dir/build.make CMakeFiles/QPSolver.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 # Help Target
@@ -180,10 +160,8 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... package"
-	@echo "... package_source"
 	@echo "... rebuild_cache"
-	@echo "... quadprog"
+	@echo "... QPSolver"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

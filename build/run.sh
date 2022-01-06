@@ -1,3 +1,3 @@
 cmake ../
 make
-./quadprog
+./QPSolver

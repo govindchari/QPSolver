@@ -8,16 +8,16 @@ class QP
 private:
     Eigen::SparseMatrix<double> Q;
     Eigen::VectorXd q;
-    Eigen::SparseMatrix A;
+    Eigen::SparseMatrix<double> A;
     Eigen::VectorXd b;
-    Eigen::SparseMatrix G;
+    Eigen::SparseMatrix<double> G;
     Eigen::VectorXd h;
 
-    DELTA delta;
-    IDX idx;
+    //DELTA delta;
+    //IDX idx;
 
 public:
-    QP::QP(Eigen::SparseMatrix<double> Q, Eigen::VectorXd q, Eigen::VectorXd b, Eigen::SparseMatrix G, Eigen::VectorXd h)
+    QP(Eigen::SparseMatrix<double> Q, Eigen::VectorXd q, Eigen::SparseMatrix<double> A, Eigen::VectorXd b, Eigen::SparseMatrix<double> G, Eigen::VectorXd h)
     {
         
     }

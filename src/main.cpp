@@ -1,10 +1,10 @@
 #include <iostream>
-#include <QP.hpp>
+#include "QP.hpp"
+#include "utilities.hpp"
 #include "Eigen/Dense"
 
 int main(){
-    Eigen::Vector3f vec;
-    vec = {1.0,1.0,1.0};
-    std::cout << vec << std::endl;
+    DELTA delta(3,2,3,4);
+    std::cout<<delta.x_a<<std::endl;
     return 0;
 }

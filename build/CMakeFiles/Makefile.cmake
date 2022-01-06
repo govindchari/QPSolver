@@ -47,5 +47,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/quadprog.dir/DependInfo.cmake"
+  "CMakeFiles/QPSolver.dir/DependInfo.cmake"
   )

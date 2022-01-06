@@ -54,16 +54,16 @@ RM = /Applications/CMake.app/Contents/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/govindchari/Desktop/git/quadprog
+CMAKE_SOURCE_DIR = /Users/govindchari/Desktop/git/QPSolver
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/govindchari/Desktop/git/quadprog/build
+CMAKE_BINARY_DIR = /Users/govindchari/Desktop/git/QPSolver/build
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/quadprog.dir/all
+all: CMakeFiles/QPSolver.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -71,34 +71,34 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/quadprog.dir/clean
+clean: CMakeFiles/QPSolver.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/quadprog.dir
+# Target rules for target CMakeFiles/QPSolver.dir
 
 # All Build rule for target.
-CMakeFiles/quadprog.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/quadprog.dir/build.make CMakeFiles/quadprog.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/quadprog.dir/build.make CMakeFiles/quadprog.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/govindchari/Desktop/git/quadprog/build/CMakeFiles --progress-num=1,2 "Built target quadprog"
-.PHONY : CMakeFiles/quadprog.dir/all
+CMakeFiles/QPSolver.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QPSolver.dir/build.make CMakeFiles/QPSolver.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QPSolver.dir/build.make CMakeFiles/QPSolver.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/govindchari/Desktop/git/QPSolver/build/CMakeFiles --progress-num=1,2 "Built target QPSolver"
+.PHONY : CMakeFiles/QPSolver.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/quadprog.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/govindchari/Desktop/git/quadprog/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/quadprog.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/govindchari/Desktop/git/quadprog/build/CMakeFiles 0
-.PHONY : CMakeFiles/quadprog.dir/rule
+CMakeFiles/QPSolver.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/govindchari/Desktop/git/QPSolver/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/QPSolver.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/govindchari/Desktop/git/QPSolver/build/CMakeFiles 0
+.PHONY : CMakeFiles/QPSolver.dir/rule
 
 # Convenience name for target.
-quadprog: CMakeFiles/quadprog.dir/rule
-.PHONY : quadprog
+QPSolver: CMakeFiles/QPSolver.dir/rule
+.PHONY : QPSolver
 
 # clean rule for target.
-CMakeFiles/quadprog.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/quadprog.dir/build.make CMakeFiles/quadprog.dir/clean
-.PHONY : CMakeFiles/quadprog.dir/clean
+CMakeFiles/QPSolver.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QPSolver.dir/build.make CMakeFiles/QPSolver.dir/clean
+.PHONY : CMakeFiles/QPSolver.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

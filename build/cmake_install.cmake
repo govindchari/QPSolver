@@ -1,4 +1,4 @@
-# Install script for directory: /Users/govindchari/Desktop/git/quadprog
+# Install script for directory: /Users/govindchari/Desktop/git/QPSolver
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/govindchari/Desktop/git/quadprog/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/govindchari/Desktop/git/QPSolver/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
