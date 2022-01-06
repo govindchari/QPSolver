@@ -1,3 +1,0 @@
-/Users/govindchari/Desktop/git/QPSolver/build/CMakeFiles/QPSolver.dir
-/Users/govindchari/Desktop/git/QPSolver/build/CMakeFiles/edit_cache.dir
-/Users/govindchari/Desktop/git/QPSolver/build/CMakeFiles/rebuild_cache.dir
