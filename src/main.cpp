@@ -1,4 +1,5 @@
 #include <iostream>
+#include <QP.hpp>
 #include "Eigen/Dense"
 
 int main(){
