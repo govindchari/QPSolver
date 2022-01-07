@@ -18,7 +18,9 @@ struct DELTA
     Eigen::VectorXd z;
     Eigen::VectorXd y;
 
-    DELTA(int nx, int ns, int nz, int ny)
+    DELTA(){}
+
+    DELTA(unsigned int nx, unsigned int ns, unsigned int nz, unsigned int ny)
     {
         x_a.setZero(nx, 1);
         s_a.setZero(ns, 1);
@@ -44,5 +46,15 @@ struct IDX
     unsigned int ny;
     unsigned int N;
 
+    IDX(){}
+
     IDX(int numx, int nums, int numz, int numy, int numN) : nx(numx), ns(nums), nz(numz), ny(numy), N(numN) {}
+};
+
+struct SOLUTION {
+    Eigen::VectorXd x;
+    Eigen::VectorXd s;
+    Eigen::VectorXd z;
+    Eigen::VectorXd y;
+    double obj;
 };
