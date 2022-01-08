@@ -19,5 +19,6 @@ int main(){
     h << 1,2;
 
     QP qp(Q,q,A,b,G,h);
+    qp.solve();
     return 0;
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "Eigen/Dense"
+#include <iostream>
 
 struct DELTA
 {
@@ -8,17 +9,17 @@ struct DELTA
     Eigen::VectorXd z_a;
     Eigen::VectorXd y_a;
 
-    Eigen::VectorXd x_cc;
-    Eigen::VectorXd s_cc;
-    Eigen::VectorXd z_cc;
-    Eigen::VectorXd y_cc;
+    Eigen::VectorXd x_c;
+    Eigen::VectorXd s_c;
+    Eigen::VectorXd z_c;
+    Eigen::VectorXd y_c;
 
     Eigen::VectorXd x;
     Eigen::VectorXd s;
     Eigen::VectorXd z;
     Eigen::VectorXd y;
 
-    DELTA(){}
+    DELTA() {}
 
     DELTA(unsigned int nx, unsigned int ns, unsigned int nz, unsigned int ny)
     {
@@ -27,10 +28,10 @@ struct DELTA
         z_a.setZero(nz, 1);
         y_a.setZero(ny, 1);
 
-        x_cc.setZero(nx, 1);
-        s_cc.setZero(ns, 1);
-        z_cc.setZero(nz, 1);
-        y_cc.setZero(ny, 1);
+        x_c.setZero(nx, 1);
+        s_c.setZero(ns, 1);
+        z_c.setZero(nz, 1);
+        y_c.setZero(ny, 1);
 
         x.setZero(nx, 1);
         s.setZero(ns, 1);
@@ -38,20 +39,9 @@ struct DELTA
         y.setZero(ny, 1);
     }
 };
-struct IDX
+
+struct SOLUTION
 {
-    unsigned int nx;
-    unsigned int ns;
-    unsigned int nz;
-    unsigned int ny;
-    unsigned int N;
-
-    IDX(){}
-
-    IDX(int numx, int nums, int numz, int numy, int numN) : nx(numx), ns(nums), nz(numz), ny(numy), N(numN) {}
-};
-
-struct SOLUTION {
     Eigen::VectorXd x;
     Eigen::VectorXd s;
     Eigen::VectorXd z;
