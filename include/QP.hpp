@@ -47,7 +47,8 @@ private:
     void update_vars(double a);
     void initialize_kkt();
     void update_kkt();
-    void logging();
+    void logging(int iter, double a);
+    void initialize();
 
 public:
     unsigned int N;
