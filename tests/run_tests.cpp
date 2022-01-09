@@ -1,11 +1,11 @@
-#include <iostream>
+#define CATCH_CONFIG_MAIN
+#include "catch.hpp"
 #include "QP.hpp"
-#include "utilities.hpp"
 #include "Eigen/Dense"
+#include "utilities.hpp"
 
-int main(){
+TEST_CASE("Test Case") {
     int n = 10;
-
     Eigen::MatrixXd A;
     Eigen::MatrixXd Q(n,n);
     Eigen::MatrixXd G(2*n,n);
@@ -27,5 +27,5 @@ int main(){
 
     QP qp(Q,q,A,b,G,h);
     qp.solve();
-    return 0;
+    REQUIRE(2==1);
 }
