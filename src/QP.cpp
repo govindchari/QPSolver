@@ -297,9 +297,16 @@ void QP::solve(bool verbose)
             ineq_res = (G * x + s - h).norm();
         }
 
+        //Evaluate stopping criteria
         proceed = ((std::abs(Jcurr - Jprev) > cost_tol) || (eq_res > constraint_tol) || (ineq_res > constraint_tol) || (gap > gap_tol)) && (iter < 25);
-        
+
         Jprev = Jcurr;
         iter++;
     } while (proceed);
+
+    //Store solution
+    solution.x = x;
+    solution.s = s;
+    solution.z = z;
+    solution.y = y;
 }

@@ -46,4 +46,5 @@ struct SOLUTION
     Eigen::VectorXd z;
     Eigen::VectorXd y;
     double obj;
+    SOLUTION(){}
 };

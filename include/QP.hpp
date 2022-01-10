@@ -9,6 +9,7 @@ private:
     unsigned int ns;
     unsigned int nz;
     unsigned int ny;
+    unsigned int N;
 
     //Problem Data
     //Eigen::SparseMatrix<double> Q;
@@ -35,6 +36,8 @@ private:
     Eigen::VectorXd p_a;
     Eigen::VectorXd p_c;
 
+    DELTA delta;
+
     void rhs_kkt_a();
     void index_sol_a();
     void rhs_kkt_c(double sig, double mu);
@@ -49,9 +52,10 @@ private:
     void initialize();
 
 public:
-    unsigned int N;
+    SOLUTION solution;
+
     QP(Eigen::MatrixXd Qi, Eigen::VectorXd qi, Eigen::MatrixXd Ai, Eigen::VectorXd bi, Eigen::MatrixXd Gi, Eigen::VectorXd hi);
-    DELTA delta;
+
     void solve();
     void solve(bool verbose);
 };
