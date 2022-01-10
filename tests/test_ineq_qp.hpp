@@ -29,7 +29,7 @@ TEST_CASE("Inequality Constrained QP")
     G(Eigen::seq(n, 2 * n - 1), Eigen::seq(0, n - 1)) = -Eigen::MatrixXd::Identity(n, n);
 
     QP qp(Q, q, A, b, G, h);
-    qp.solve(false);
+    qp.solve(true);
 
     OptimizationProblem qp_epi;
     VectorX x = qp_epi.addVariable("x", n);
@@ -42,10 +42,10 @@ TEST_CASE("Inequality Constrained QP")
 
     qp_epi.addCostTerm(x.transpose() * par(Q) * x + par(q).dot(x));
     osqp::OSQPSolver solver(qp_epi);
-    std::cout << solver << std::endl;
+    //std::cout << solver << std::endl;
     solver.solve(false);
-    std::cout << "Solution:\n"
-              << eval(x) << "\n";
+    //std::cout << "Solution:\n"
+    //          << eval(x) << "\n";
 
     REQUIRE(1 == 2);
 }

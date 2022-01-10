@@ -158,10 +158,12 @@ void QP::logging(int iter, double a)
     double ineq_res = 0;
     double gap = 0;
 
-    if (A.size() != 0){
+    if (A.size() != 0)
+    {
         eq_res = (A * x - b).norm();
     }
-    if (G.size() != 0){
+    if (G.size() != 0)
+    {
         gap = s.transpose() * z;
         ineq_res = (G * x + s - h).norm();
     }
@@ -231,16 +233,30 @@ void QP::solve(bool verbose)
 {
     if (verbose)
     {
-        printf("iter     objv        gap       |Ax-b|    |Gx+s-h|    step\n");
-        printf("---------------------------------------------------------\n");
+        printf("iter      objv          gap         |Ax-b|      |Gx+s-h|     step\n");
+        printf("------------------------------------------------------------------\n");
     }
+
+    //Stopping criterion stuff
+    double const constraint_tol = 1e-6;
+    double const gap_tol = 1e-6;
+    double const cost_tol = 1e-4;
+    unsigned int iter = 1;
+    double Jprev = std::numeric_limits<double>::max();
+    double temp1;
+    double temp2;
+    double Jcurr;
+    double ineq_res = 0;
+    double eq_res = 0;
+    double gap = 0;
+    bool proceed = false;
 
     initialize();
     initialize_kkt();
     double sig;
     double mu;
     double a;
-    for (int i = 1; i <= 10; i++)
+    do
     {
         update_kkt();
 
@@ -261,8 +277,29 @@ void QP::solve(bool verbose)
         a = fmin(1, 0.99 * fmin(linesearch(s, delta.s), linesearch(z, delta.z)));
 
         update_vars(a);
-        std::cout << x << std::endl;
         if (verbose)
-            logging(i, a);
-    }
+        {
+            logging(iter, a);
+        }
+
+        //Stopping criterion
+        temp1 = x.transpose() * Q * x;
+        temp2 = q.transpose() * x;
+        Jcurr = temp1 + temp2;
+
+        if (A.size() != 0)
+        {
+            eq_res = (A * x - b).norm();
+        }
+        if (G.size() != 0)
+        {
+            gap = s.transpose() * z;
+            ineq_res = (G * x + s - h).norm();
+        }
+
+        proceed = ((std::abs(Jcurr - Jprev) > cost_tol) || (eq_res > constraint_tol) || (ineq_res > constraint_tol) || (gap > gap_tol)) && (iter < 25);
+        
+        Jprev = Jcurr;
+        iter++;
+    } while (proceed);
 }
