@@ -1,8 +1,6 @@
 #pragma once
 #include "Eigen/Dense"
-
 #include "utilities.hpp"
-#include <iostream>
 class QP
 {
 private:

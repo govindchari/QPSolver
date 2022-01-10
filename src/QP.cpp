@@ -1,4 +1,5 @@
 #include "QP.hpp"
+#include <iostream>
 
 QP::QP(Eigen::MatrixXd Qi, Eigen::VectorXd qi, Eigen::MatrixXd Ai, Eigen::VectorXd bi, Eigen::MatrixXd Gi, Eigen::VectorXd hi) : Q(Qi), q(qi), A(Ai), b(bi), G(Gi), h(hi)
 {
@@ -17,15 +18,12 @@ QP::QP(Eigen::MatrixXd Qi, Eigen::VectorXd qi, Eigen::MatrixXd Ai, Eigen::Vector
     rhs_a.setZero(N, 1);
     rhs_c.setZero(N, 1);
     p_a.setZero(N, 1);
-    p_a.setConstant(2); //REMOVE THIS LATER
     p_c.setZero(N, 1);
 
     //Optimization variables
     x.setZero(nx, 1);
     s.setZero(ns, 1);
-    s.setConstant(1); //REMOVE THIS LATER
     z.setZero(nz, 1);
-    z.setConstant(2); //REMOVE THIS LATER
     y.setZero(ny, 1);
 }
 
@@ -263,7 +261,7 @@ void QP::solve(bool verbose)
         a = fmin(1, 0.99 * fmin(linesearch(s, delta.s), linesearch(z, delta.z)));
 
         update_vars(a);
-
+        std::cout << x << std::endl;
         if (verbose)
             logging(i, a);
     }
