@@ -21,5 +21,5 @@ target_include_directories(run_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
 set(ENABLE_OSQP TRUE)
 set(ENABLE_ECOS TRUE)
-add_subdirectory(Epigraph/)
+add_subdirectory(tests/Epigraph)
 target_link_libraries(run_tests QPSolver epigraph)

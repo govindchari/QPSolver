@@ -1,1 +1,0 @@
-(cd lib/eigen/ && rm -rf build/ && ls && mkdir build && cd build/ && cmake -G "Unix Makefiles" .. && cmake --build .)

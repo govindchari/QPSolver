@@ -62,6 +62,5 @@ TEST_CASE("Inequality Constrained QP")
     Eigen::VectorXd OSQP_sol = eval(x);
 
     double tol = 1e-3;
-    //REQUIRE((QPSolver_sol-OSQP_sol).norm() < tol);
-    REQUIRE(1==2);
+    REQUIRE((QPSolver_sol-OSQP_sol).norm() < tol);
 }

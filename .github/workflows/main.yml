@@ -28,13 +28,13 @@ jobs:
       # Runs a single command using the runners shell
       - name: Install Eigen
         run: |
-          git clone --depth 1 https://gitlab.com/libeigen/eigen.git Eigen
+          (cd lib/ && git clone --depth 1 https://gitlab.com/libeigen/eigen.git Eigen)
           cmake -BEigen/build -HEigen -DBUILD_TESTING=OFF
           sudo env "PATH=$PATH" cmake --build Eigen/build --target install
       
       - name: Install Epigraph
         run: |
-          git clone --depth 1 https://github.com/EmbersArc/Epigraph.git Epigraph
+          (cd tests/ && git clone --depth 1 https://github.com/EmbersArc/Epigraph.git Epigraph)
           cmake -BEpigraph/build -HEpigraph -DBUILD_TESTING=OFF -DCATCH_INSTALL_DOCS=OFF -DENABLE_OSQP:BOOL=TRUE -DENABLE_ECOS:BOOL=TRUE
           sudo env "PATH=$PATH" cmake --build Epigraph/build --target install
 
