@@ -6,7 +6,10 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches:
+      - '*'
+      - '*/*'
+      - '**'
   pull_request:
     branches: [ main ]
 
@@ -40,6 +43,6 @@ jobs:
           sudo env "PATH=$PATH" cmake --build tests/Epigraph/build --target install
 
       # Runs a single command using the runners shell
-      - name: Run a one-line script
+      - name: Run Unit Tests
         run: (sh ./.github/workflows/run_tests.sh)
 
