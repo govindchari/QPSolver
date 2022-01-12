@@ -26,6 +26,10 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
+      - name: cd
+        run: cd include/
+
+      # Runs a single command using the runners shell
       - name: Run a one-line script
         run: sh ./.github/workflows/run_tests.sh
 
