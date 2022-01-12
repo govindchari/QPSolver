@@ -29,6 +29,7 @@ jobs:
       - name: Install Eigen
         run: |
           (cd lib/ && git clone --depth 1 https://gitlab.com/libeigen/eigen.git lib/Eigen)
+          echo hi
           cmake -Blib/Eigen/build -Hlib/Eigen -DBUILD_TESTING=OFF
           sudo env "PATH=$PATH" cmake --build lib/Eigen/build --target install
       
