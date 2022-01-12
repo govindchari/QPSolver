@@ -35,7 +35,7 @@ jobs:
       - name: Install Epigraph
         run: |
           git clone --depth 1 https://github.com/EmbersArc/Epigraph.git Epigraph
-          cmake -BEpigraph/build -HEpigraph -DBUILD_TESTING=OFF -DCATCH_INSTALL_DOCS=OFF
+          cmake -BEpigraph/build -HEpigraph -DBUILD_TESTING=OFF -DCATCH_INSTALL_DOCS=OFF -DENABLE_OSQP:BOOL=TRUE -DENABLE_ECOS:BOOL=TRUE
           sudo env "PATH=$PATH" cmake --build Epigraph/build --target install
 
       # Runs a single command using the runners shell
