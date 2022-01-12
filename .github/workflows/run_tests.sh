@@ -1,1 +1,1 @@
-(cd ../../build && cmake ../ && make && ./run_tests)
+(cd build/ && cmake ../ && make && ./run_tests)
