@@ -42,7 +42,7 @@ jobs:
           cmake -Btests/Epigraph/build -Htests/Epigraph -DBUILD_TESTING=OFF -DCATCH_INSTALL_DOCS=OFF -DENABLE_OSQP:BOOL=TRUE -DENABLE_ECOS:BOOL=TRUE
           sudo env "PATH=$PATH" cmake --build tests/Epigraph/build --target install
 
-      # Runs a single command using the runners shell
+      # Runs Unit Tests from tests/ folder
       - name: Run Unit Tests
         run: (sh ./.github/workflows/run_tests.sh)
 
