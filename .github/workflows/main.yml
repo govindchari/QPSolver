@@ -31,5 +31,5 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: (sh ./.github/workflows/configure.sh && sh ./.github/workflows/run_tests.sh)
+        run: (sh ./.github/workflows/run_tests.sh)
 
