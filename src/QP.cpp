@@ -198,7 +198,7 @@ void QP::initialize()
 
     rhs << -q, h, b;
 
-    Eigen::VectorXd sol = A_init.colPivHouseholderQr().solve(rhs);
+    Eigen::VectorXd sol = A_init.ldlt().solve(rhs);
 
     x = sol(idx_x);
     z = sol(idx_s);
