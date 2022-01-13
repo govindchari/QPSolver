@@ -238,9 +238,6 @@ void QP::solve(bool verbose)
     }
 
     //Stopping criterion stuff
-    double const constraint_tol = 1e-6;
-    double const gap_tol = 1e-6;
-    double const cost_tol = 1e-4;
     unsigned int iter = 1;
     double Jprev = std::numeric_limits<double>::max();
     double temp1;
@@ -298,7 +295,7 @@ void QP::solve(bool verbose)
         }
 
         //Evaluate stopping criteria
-        proceed = ((std::abs(Jcurr - Jprev) > cost_tol) || (eq_res > constraint_tol) || (ineq_res > constraint_tol) || (gap > gap_tol)) && (iter < 25);
+        proceed = ((std::abs(Jcurr - Jprev) > tol.cost) || (eq_res > tol.constraint) || (ineq_res > tol.constraint) || (gap > tol.gap)) && (iter < 25);
 
         Jprev = Jcurr;
         iter++;

@@ -48,3 +48,15 @@ struct SOLUTION
     double obj;
     SOLUTION(){}
 };
+
+struct TOLERANCE
+{
+    double constraint;
+    double gap;
+    double cost;
+    TOLERANCE(){
+        constraint = 1e-6;
+        gap = 1e-6;
+        cost = 1e-4;
+    }
+};

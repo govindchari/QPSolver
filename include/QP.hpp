@@ -53,6 +53,7 @@ private:
 
 public:
     SOLUTION solution;
+    TOLERANCE tol;
 
     QP(Eigen::MatrixXd Qi, Eigen::VectorXd qi, Eigen::MatrixXd Ai, Eigen::VectorXd bi, Eigen::MatrixXd Gi, Eigen::VectorXd hi);
 
