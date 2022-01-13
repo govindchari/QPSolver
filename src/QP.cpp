@@ -259,13 +259,14 @@ void QP::solve(bool verbose)
 
         //Affine scaling step
         rhs_kkt_a();
-        p_a = KKT.colPivHouseholderQr().solve(rhs_a);
+        auto KKT_factor = KKT.ldlt();
+        p_a = KKT_factor.solve(rhs_a);
         index_sol_a();
 
         //Centering and correction step
         centering_params(sig, mu);
         rhs_kkt_c(sig, mu);
-        p_c = KKT.colPivHouseholderQr().solve(rhs_c);
+        p_c = KKT_factor.solve(rhs_c);
         index_sol_c();
 
         combine_deltas();

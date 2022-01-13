@@ -12,13 +12,10 @@ private:
     unsigned int N;
 
     //Problem Data
-    //Eigen::SparseMatrix<double> Q;
     Eigen::MatrixXd Q;
     Eigen::VectorXd q;
-    //Eigen::SparseMatrix<double> A;
     Eigen::MatrixXd A;
     Eigen::VectorXd b;
-    //Eigen::SparseMatrix<double> G;
     Eigen::MatrixXd G;
     Eigen::VectorXd h;
 
@@ -29,7 +26,6 @@ private:
     Eigen::VectorXd y;
 
     //KKT System
-    //Eigen::SparseMatrix<double> KKT;
     Eigen::MatrixXd KKT;
     Eigen::VectorXd rhs_a;
     Eigen::VectorXd rhs_c;
