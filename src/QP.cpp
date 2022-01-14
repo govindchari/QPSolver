@@ -1,5 +1,6 @@
 #include "QP.hpp"
 #include <iostream>
+#include<Eigen/SparseCholesky>
 
 QP::QP(Eigen::MatrixXd Qi, Eigen::VectorXd qi, Eigen::MatrixXd Ai, Eigen::VectorXd bi, Eigen::MatrixXd Gi, Eigen::VectorXd hi) : Q(Qi), q(qi), A(Ai), b(bi), G(Gi), h(hi)
 {
@@ -139,6 +140,7 @@ void QP::initialize_kkt()
         KKT(idx_x, idx_y) = A.transpose();
         KKT(idx_y, idx_x) = A;
     }
+    KKT_sparse = KKT.sparseView();
 }
 void QP::update_kkt()
 {
@@ -147,6 +149,7 @@ void QP::update_kkt()
         auto idx_s = Eigen::seq(nx, nx + ns - 1);
         Eigen::VectorXd temp = z.cwiseQuotient(s);
         KKT(idx_s, idx_s) = temp.asDiagonal();
+        KKT_sparse = KKT.sparseView();
     }
 }
 void QP::logging(int iter, double a)
@@ -250,6 +253,8 @@ void QP::solve(bool verbose)
 
     initialize();
     initialize_kkt();
+    Eigen::SimplicialLDLT<Eigen::SparseMatrix<double> > solver;
+
     double sig;
     double mu;
     double a;
@@ -259,14 +264,14 @@ void QP::solve(bool verbose)
 
         //Affine scaling step
         rhs_kkt_a();
-        auto KKT_factor = KKT.ldlt();
-        p_a = KKT_factor.solve(rhs_a);
+        solver.compute(KKT_sparse);
+        p_a = solver.solve(rhs_a);
         index_sol_a();
 
         //Centering and correction step
         centering_params(sig, mu);
         rhs_kkt_c(sig, mu);
-        p_c = KKT_factor.solve(rhs_c);
+        p_c = solver.solve(rhs_c);
         index_sol_c();
 
         combine_deltas();
