@@ -1,1 +1,1 @@
-(cmake . && make && ./run_tests)
+(cmake . -DENABLE_COVERAGE:BOOL=TRUE && make && ./run_tests)

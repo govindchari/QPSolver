@@ -46,3 +46,6 @@ jobs:
       - name: Run Unit Tests
         run: (sh ./.github/workflows/run_tests.sh)
 
+      - name: Code Coverage
+        run: bash <(curl -s https://codecov.io/bash)
+
