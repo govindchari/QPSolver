@@ -47,7 +47,6 @@ jobs:
 
       - name: Code Coverage
         run: |
-          pyenv global 3.6
           pip install --user codecov
           codecov
           ls CMakeFiles/run_tests.dir/tests/
