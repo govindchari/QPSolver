@@ -32,7 +32,6 @@ jobs:
       - name: Install Eigen
         run: |
           (cd lib/ && git clone --depth 1 https://gitlab.com/libeigen/eigen.git Eigen)
-          echo hi
           cmake -Blib/Eigen/build -Hlib/Eigen -DBUILD_TESTING=OFF
           sudo env "PATH=$PATH" cmake --build lib/Eigen/build --target install
       
@@ -47,5 +46,8 @@ jobs:
         run: (sh ./.github/workflows/run_tests.sh)
 
       - name: Code Coverage
-        run: bash <(curl -s https://codecov.io/bash)
-
+        run: |
+          pip install --user codecov
+          codecov
+          ls build/CMakeFiles/run_tests.dir/tests/
+          bash <(curl -s https://codecov.io/bash)

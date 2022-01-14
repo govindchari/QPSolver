@@ -13,12 +13,6 @@ target_link_libraries (QPSolver Eigen3::Eigen)
 target_include_directories(QPSolver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_include_directories(QPSolver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib/eigen)
 
-#Code Coverage
-option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" FALSE)
-if (ENABLE_COVERAGE)
-    add_compile_options(--coverage -O0)
-endif()
-
 #Testing
 include_directories(tests)
 add_executable(run_tests tests/run_tests.cpp)
@@ -29,4 +23,11 @@ target_include_directories(run_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 set(ENABLE_OSQP TRUE)
 set(ENABLE_ECOS TRUE)
 add_subdirectory(tests/Epigraph)
-target_link_libraries(run_tests QPSolver epigraph --coverage)
+target_link_libraries(run_tests QPSolver epigraph)
+
+#Code Coverage
+option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" FALSE)
+if (ENABLE_COVERAGE)
+    add_compile_options(--coverage -O0)
+    target_link_libraries(QPSolver --coverage)
+endif()
