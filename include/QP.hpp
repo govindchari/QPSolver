@@ -1,5 +1,6 @@
 #pragma once
 #include "Eigen/Dense"
+#include "Eigen/Sparse"
 #include "utilities.hpp"
 class QP
 {
@@ -27,6 +28,7 @@ private:
 
     //KKT System
     Eigen::MatrixXd KKT;
+    Eigen::SparseMatrix<double> KKT_sparse;
     Eigen::VectorXd rhs_a;
     Eigen::VectorXd rhs_c;
     Eigen::VectorXd p_a;
