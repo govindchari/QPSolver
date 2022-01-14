@@ -11,7 +11,7 @@ using namespace std::chrono;
 TEST_CASE("Inequality Constrained QP")
 {
     // Setup problem data
-    int n = 10;
+    int n = 100;
     Eigen::MatrixXd A;
     Eigen::MatrixXd Q(n, n);
     Eigen::MatrixXd G(2 * n, n);
