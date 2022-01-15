@@ -1,6 +1,8 @@
 #include "QP.hpp"
 #include <iostream>
 #include <Eigen/SparseCholesky>
+#include <chrono>
+using namespace std::chrono;
 
 QP::QP(Eigen::MatrixXd Qi, Eigen::VectorXd qi, Eigen::MatrixXd Ai, Eigen::VectorXd bi, Eigen::MatrixXd Gi, Eigen::VectorXd hi) : Q(Qi), q(qi), A(Ai), b(bi), G(Gi), h(hi)
 {
@@ -163,7 +165,6 @@ void QP::regularize_kkt()
     KKT_reg = KKT.sparseView();
     KKT_reg += reg;
 }
-
 void QP::iterative_refinement(Eigen::VectorXd &sol, const Eigen::VectorXd &rhs, Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>> &solver)
 {
     Eigen::VectorXd dl(rhs.size());
@@ -173,7 +174,6 @@ void QP::iterative_refinement(Eigen::VectorXd &sol, const Eigen::VectorXd &rhs, 
         sol += dl;
     }
 }
-
 void QP::logging(const int iter, const double a)
 {
     double temp1 = x.transpose() * Q * x;
@@ -222,8 +222,9 @@ void QP::initialize()
     }
 
     rhs << -q, h, b;
-
-    Eigen::VectorXd sol = A_init.ldlt().solve(rhs);
+    Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>> solver;
+    solver.compute(A_init.sparseView());
+    Eigen::VectorXd sol = solver.solve(rhs);
 
     x = sol(idx_x);
     z = sol(idx_s);
