@@ -45,8 +45,7 @@ struct SOLUTION
     Eigen::VectorXd s;
     Eigen::VectorXd z;
     Eigen::VectorXd y;
-    double obj;
-    SOLUTION(){}
+    SOLUTION() {}
 };
 
 struct TOLERANCE
@@ -54,9 +53,12 @@ struct TOLERANCE
     double constraint;
     double gap;
     double cost;
-    TOLERANCE(){
+    double iter_ref;
+    TOLERANCE()
+    {
         constraint = 1e-6;
         gap = 1e-6;
         cost = 1e-4;
+        iter_ref = 1e-6;
     }
 };

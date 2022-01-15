@@ -1,6 +1,6 @@
 #include "QP.hpp"
 #include <iostream>
-#include<Eigen/SparseCholesky>
+#include <Eigen/SparseCholesky>
 
 QP::QP(Eigen::MatrixXd Qi, Eigen::VectorXd qi, Eigen::MatrixXd Ai, Eigen::VectorXd bi, Eigen::MatrixXd Gi, Eigen::VectorXd hi) : Q(Qi), q(qi), A(Ai), b(bi), G(Gi), h(hi)
 {
@@ -13,6 +13,14 @@ QP::QP(Eigen::MatrixXd Qi, Eigen::VectorXd qi, Eigen::MatrixXd Ai, Eigen::Vector
     N = nx + ns + nz + ny;
 
     DELTA delta(nx, ns, nz, ny);
+
+    //Regularization Matrix
+    double eps = 1e-7;
+    Eigen::MatrixXd reg_dense(N, N);
+    reg_dense.setZero(N, N);
+    reg_dense(Eigen::seq(0, nx + ns - 1), Eigen::seq(0, nx + ns - 1)) = eps * Eigen::MatrixXd::Identity(nx + ns, nx + ns);
+    reg_dense(Eigen::seq(nx + ns, N - 1), Eigen::seq(nx + ns, N - 1)) = -eps * Eigen::MatrixXd::Identity(nz + ny, nz + ny);
+    reg = reg_dense.sparseView();
 
     //KKT System
     KKT.setZero(N, N);
@@ -64,7 +72,7 @@ void QP::index_sol_a()
     delta.z_a = p_a(Eigen::seq(nx + ns, nx + ns + nz - 1));
     delta.y_a = p_a(Eigen::seq(nx + ns + nz, N - 1));
 }
-void QP::rhs_kkt_c(double sig, double mu)
+void QP::rhs_kkt_c(const double sig, const double mu)
 {
     Eigen::VectorXd temp;
     temp.setConstant(ns, 1);
@@ -82,7 +90,7 @@ void QP::index_sol_c()
     delta.z_c = p_c(Eigen::seq(nx + ns, nx + ns + nz - 1));
     delta.y_c = p_c(Eigen::seq(nx + ns + nz, N - 1));
 }
-double QP::linesearch(Eigen::VectorXd x, Eigen::VectorXd dx)
+double QP::linesearch(const Eigen::VectorXd x, const Eigen::VectorXd dx)
 {
     int len = x.size();
     Eigen::VectorXd temp(len);
@@ -140,7 +148,6 @@ void QP::initialize_kkt()
         KKT(idx_x, idx_y) = A.transpose();
         KKT(idx_y, idx_x) = A;
     }
-    KKT_sparse = KKT.sparseView();
 }
 void QP::update_kkt()
 {
@@ -149,10 +156,25 @@ void QP::update_kkt()
         auto idx_s = Eigen::seq(nx, nx + ns - 1);
         Eigen::VectorXd temp = z.cwiseQuotient(s);
         KKT(idx_s, idx_s) = temp.asDiagonal();
-        KKT_sparse = KKT.sparseView();
     }
 }
-void QP::logging(int iter, double a)
+void QP::regularize_kkt()
+{
+    KKT_reg = KKT.sparseView();
+    KKT_reg += reg;
+}
+
+void QP::iterative_refinement(Eigen::VectorXd &sol, const Eigen::VectorXd &rhs, Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>> &solver)
+{
+    Eigen::VectorXd dl(rhs.size());
+    while ((KKT * sol - rhs).norm() > tol.iter_ref)
+    {
+        dl = solver.solve((rhs - KKT * sol).sparseView());
+        sol += dl;
+    }
+}
+
+void QP::logging(const int iter, const double a)
 {
     double temp1 = x.transpose() * Q * x;
     double temp2 = q.transpose() * x;
@@ -253,7 +275,7 @@ void QP::solve(bool verbose)
 
     initialize();
     initialize_kkt();
-    Eigen::SimplicialLDLT<Eigen::SparseMatrix<double> > solver;
+    Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>> solver;
 
     double sig;
     double mu;
@@ -261,25 +283,29 @@ void QP::solve(bool verbose)
     do
     {
         update_kkt();
+        regularize_kkt();
 
         //Affine scaling step
         rhs_kkt_a();
-        solver.compute(KKT_sparse);
+        solver.compute(KKT_reg);
         p_a = solver.solve(rhs_a);
+        iterative_refinement(p_a, rhs_a, solver);
         index_sol_a();
 
         //Centering and correction step
         centering_params(sig, mu);
         rhs_kkt_c(sig, mu);
         p_c = solver.solve(rhs_c);
+        iterative_refinement(p_c, rhs_c, solver);
         index_sol_c();
 
+        //Combine prediction and correction steps
         combine_deltas();
 
-        //Linesearch for stepsize
+        //Update solution iterate after linesearch
         a = fmin(1, 0.99 * fmin(linesearch(s, delta.s), linesearch(z, delta.z)));
-
         update_vars(a);
+
         if (verbose)
         {
             logging(iter, a);
@@ -289,7 +315,6 @@ void QP::solve(bool verbose)
         temp1 = x.transpose() * Q * x;
         temp2 = q.transpose() * x;
         Jcurr = temp1 + temp2;
-
         if (A.size() != 0)
         {
             eq_res = (A * x - b).norm();

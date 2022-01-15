@@ -28,25 +28,30 @@ private:
 
     //KKT System
     Eigen::MatrixXd KKT;
-    Eigen::SparseMatrix<double> KKT_sparse;
+    Eigen::SparseMatrix<double> KKT_reg;
     Eigen::VectorXd rhs_a;
     Eigen::VectorXd rhs_c;
     Eigen::VectorXd p_a;
     Eigen::VectorXd p_c;
 
+    //Regularization Matrix
+    Eigen::SparseMatrix<double> reg;
+
     DELTA delta;
 
     void rhs_kkt_a();
     void index_sol_a();
-    void rhs_kkt_c(double sig, double mu);
+    void rhs_kkt_c(const double sig, const double mu);
     void index_sol_c();
-    double linesearch(Eigen::VectorXd x,Eigen::VectorXd dx);
+    double linesearch(const Eigen::VectorXd x, const Eigen::VectorXd dx);
     void centering_params(double &sig, double &mu);
     void combine_deltas();
     void update_vars(double a);
     void initialize_kkt();
     void update_kkt();
-    void logging(int iter, double a);
+    void regularize_kkt();
+    void iterative_refinement(Eigen::VectorXd &sol, const Eigen::VectorXd &rhs, Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>> &solver);
+    void logging(const int iter, const double a);
     void initialize();
 
 public:
