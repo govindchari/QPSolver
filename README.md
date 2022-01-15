@@ -10,3 +10,6 @@ Based on cvxgen paper includes
   - Permuted LDLT decomposition
   - Iterative refinement
   - Sparse matrices
+
+Debug:
+  - Add #include <string.h> to top of QPSolver/tests/Epigraph/solvers/ecos/ecos_bb/ecos_bb.c
