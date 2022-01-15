@@ -4,7 +4,9 @@ project(QPSolver VERSION 1.0)
 set(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_FLAGS "-O3")
 
-add_library (QPSolver src/QP.cpp)
+add_library (QPSolver SHARED)
+target_include_directories(QPSolver PUBLIC include)
+target_sources(QPSolver PRIVATE src/QP.cpp)
 find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 target_link_libraries (QPSolver Eigen3::Eigen)
 
