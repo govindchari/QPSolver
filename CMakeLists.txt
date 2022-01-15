@@ -13,6 +13,7 @@ target_include_directories(QPSolver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib/eigen
 
 #Testing
 if (ENABLE_TESTING)
+    message("QPSolver Testing Enabled")
     include_directories(tests)
     add_executable(run_tests tests/run_tests.cpp)
     target_include_directories(run_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
