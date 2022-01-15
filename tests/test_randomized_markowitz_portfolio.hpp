@@ -8,18 +8,18 @@
 using namespace cvx;
 using namespace std::chrono;
 
-TEST_CASE("Markowitz Portfolio QP")
+TEST_CASE("Randomized Markowitz Portfolio QP")
 {
     std::cout << "" << std::endl;
     std::cout << "" << std::endl;
     std::cout << "====================================================================" << std::endl;
-    std::cout << "Markowitz Portfolio" << std::endl;
+    std::cout << "Randomized Markowitz Portfolio" << std::endl;
     std::cout << "====================================================================" << std::endl;
     std::cout << "" << std::endl;
     std::cout << "" << std::endl;
 
     // Setup problem data
-    int n = 5; //Number of assets
+    int n = 100; //Number of assets
     Eigen::MatrixXd A(1, n);
     Eigen::MatrixXd Q(n, n);    //Return Covariance
     Eigen::MatrixXd G(n, n);
@@ -28,12 +28,13 @@ TEST_CASE("Markowitz Portfolio QP")
     Eigen::VectorXd h(n);
 
     A.setConstant(1);
-    Q = Eigen::MatrixXd::Identity(n, n);
+    Q.setRandom();
+    Q = Q.transpose() * Q;
     G = -Eigen::MatrixXd::Identity(n, n);
     h.setZero(n);
 
     b << 1;
-    q << -1, -2, -3, -4, -5;
+    q.setRandom();
 
     //Set up QPSolver solver
     QP qp(Q, q, A, b, G, h);

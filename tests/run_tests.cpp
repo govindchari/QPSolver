@@ -3,4 +3,5 @@
 
 //Tests
 #include "test_ineq_qp.hpp"
-#include "markowitz_portfolio.hpp"
+#include "test_markowitz_portfolio.hpp"
+#include "test_randomized_markowitz_portfolio.hpp"
