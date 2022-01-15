@@ -48,7 +48,7 @@ TEST_CASE("Inequality Constrained QP")
         qp_epi.addConstraint(lessThan(par(Gi).dot(x), par(h(i))));
     }
 
-    qp_epi.addCostTerm(x.transpose() * par(Q) * x + par(q).dot(x));
+    qp_epi.addCostTerm(par(0.5) * x.transpose() * par(Q) * x + par(q).dot(x));
     osqp::OSQPSolver solver(qp_epi);
     auto start2 = high_resolution_clock::now();
     solver.solve(false);
