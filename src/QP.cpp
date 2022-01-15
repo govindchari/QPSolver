@@ -80,7 +80,7 @@ void QP::rhs_kkt_c(const double sig, const double mu)
     rhs_c.setZero(N, 1);
     if (G.size() != 0)
     {
-        rhs_c(Eigen::seq(nx + 1, nx + ns)) = (temp - delta.s_a.cwiseProduct(delta.z_a)).cwiseQuotient(s);
+        rhs_c(Eigen::seq(nx, nx + ns - 1)) = (temp - delta.s_a.cwiseProduct(delta.z_a)).cwiseQuotient(s);
     }
 }
 void QP::index_sol_c()
@@ -174,7 +174,7 @@ void QP::iterative_refinement(Eigen::VectorXd &sol, const Eigen::VectorXd &rhs, 
 }
 void QP::logging(const int iter, const double a)
 {
-    double temp1 = x.transpose() * Q * x;
+    double temp1 = 0.5 * x.transpose() * Q * x;
     double temp2 = q.transpose() * x;
     auto J = temp1 + temp2;
     double eq_res = 0;
@@ -275,7 +275,6 @@ void QP::solve(bool verbose)
     initialize();
     initialize_kkt();
     Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>> solver;
-
     double sig;
     double mu;
     double a;
@@ -311,7 +310,7 @@ void QP::solve(bool verbose)
         }
 
         //Stopping criterion
-        temp1 = x.transpose() * Q * x;
+        temp1 = 0.5 * x.transpose() * Q * x;
         temp2 = q.transpose() * x;
         Jcurr = temp1 + temp2;
         if (A.size() != 0)
