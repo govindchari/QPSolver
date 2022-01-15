@@ -1,1 +1,1 @@
-(cmake . && make && ./run_tests)
+(cmake . -DENABLE_TESTING:BOOL=TRUE && make && ./run_tests)
