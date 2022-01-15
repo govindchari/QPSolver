@@ -1,8 +1,6 @@
 #include "QP.hpp"
 #include <iostream>
 #include <Eigen/SparseCholesky>
-#include <chrono>
-using namespace std::chrono;
 
 QP::QP(Eigen::MatrixXd Qi, Eigen::VectorXd qi, Eigen::MatrixXd Ai, Eigen::VectorXd bi, Eigen::MatrixXd Gi, Eigen::VectorXd hi) : Q(Qi), q(qi), A(Ai), b(bi), G(Gi), h(hi)
 {
@@ -43,28 +41,28 @@ void QP::rhs_kkt_a()
     // Unconstrained Optimization
     if (A.size() == 0 && G.size() == 0)
     {
-        rhs_a << -(Q * x + q);
+        rhs_a << -(Q.sparseView() * x + q);
     }
     // Inequality Constrained Optimization
     else if (A.size() == 0 && G.size() != 0)
     {
-        rhs_a << -(Q * x + q + G.transpose() * z),
+        rhs_a << -(Q.sparseView() * x + q + (G.transpose()).sparseView() * z),
             -(z),
-            -(G * x + s - h);
+            -(G.sparseView() * x + s - h);
     }
     // Equality Constrained Optimization
     else if (A.size() != 0 && G.size() == 0)
     {
-        rhs_a << -(Q * x + q + A.transpose() * y),
-            -(A * x - b);
+        rhs_a << -(Q * x + q + (A.transpose()).sparseView() * y),
+            -(A.sparseView() * x - b);
     }
     // Equality and Inequality Constrained Optimization
     else
     {
-        rhs_a << -(Q * x + q + A.transpose() * y + G.transpose() * z),
+        rhs_a << -(Q * x + q + A.transpose().sparseView() * y + G.transpose().sparseView() * z),
             -(z),
-            -(G * x + s - h),
-            -(A * x - b);
+            -(G.sparseView() * x + s - h),
+            -(A.sparseView() * x - b);
     }
 }
 void QP::index_sol_a()
