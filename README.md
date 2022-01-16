@@ -37,6 +37,7 @@ target_link_libraries(my_library QPSolver)
 ```
 
 ### Example
+In this example we will solve a portfolio optimization problem
 ```cpp
 #include <iostream>
 #include "QPSolver.hpp"
