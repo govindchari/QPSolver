@@ -5,7 +5,10 @@
 
 QPSolver is a quadratic program solver implemented in C++ based on the [cvxgen](https://stanford.edu/~boyd/papers/pdf/code_gen_impl.pdf) paper. This solver solves problems of the following form
 
+<img src="https://user-images.githubusercontent.com/6196536/149648352-649501d1-2ece-4ef0-aacb-bc373be3d566.png" alt="img" width="200"/>
+
 ## Features
+
 This solver implements the following
   * Mehrotra's predictor-corrector
   * Permuted LDLT decomposition
