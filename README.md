@@ -11,12 +11,9 @@ QPSolver is a quadratic program solver implemented in C++ based on the [cvxgen](
 
 This solver implements the following
   * Mehrotra's predictor-corrector
-  * Permuted LDLT decomposition
+  * Permuted LDLT factorization
   * KKT system regularization
   * Iterative refinement
-
-Debug:
-  - Add #include <string.h> to top of QPSolver/tests/Epigraph/solvers/ecos/ecos_bb/ecos_bb.c
 
 ## Installation Guide
 
