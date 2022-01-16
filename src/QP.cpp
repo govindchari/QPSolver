@@ -74,12 +74,12 @@ void QP::index_sol_a()
 }
 void QP::rhs_kkt_c(const double sig, const double mu)
 {
-    Eigen::VectorXd temp;
-    temp.setConstant(ns, 1);
-    temp = sig * mu * temp;
     rhs_c.setZero(N, 1);
     if (G.size() != 0)
     {
+        Eigen::VectorXd temp;
+        temp.setConstant(ns, 1);
+        temp = sig * mu * temp;
         rhs_c(Eigen::seq(nx, nx + ns - 1)) = (temp - delta.s_a.cwiseProduct(delta.z_a)).cwiseQuotient(s);
     }
 }
@@ -107,11 +107,42 @@ double QP::linesearch(const Eigen::VectorXd x, const Eigen::VectorXd dx)
     }
     return fmin(1.0, temp.minCoeff());
 }
+double QP::backtracking_linesearch()
+{
+    double a = 1;
+    double b = 0.5;
+    double t = 0.9;
+
+    Eigen::VectorXd xkp1 = x + a * delta.x;
+
+    double temp1 = 0.5 * (xkp1).transpose() * Q * (xkp1);
+    double temp2 = q.transpose() * (xkp1);
+    double temp3 = 0.5 * x.transpose() * Q * x;
+    double temp4 = q.dot(x);
+    Eigen::VectorXd temp5 = (Q * x + q);
+    double temp6 = a * t * temp5.dot(delta.x);
+
+    while (temp1 + temp2 > temp3  + temp4 + temp6)
+    {
+        a *= b;
+        xkp1 = x + a * delta.x;
+        temp1 = 0.5 * (xkp1).transpose() * Q * (xkp1);
+        temp2 = q.transpose() * (xkp1);
+        temp6 = a * t * temp5.dot(delta.x);
+    }
+    return a;
+}
+
 void QP::centering_params(double &sig, double &mu)
 {
-    mu = s.dot(z) / ns;
-    double a = fmin(linesearch(s, delta.s_a), linesearch(z, delta.z_a));
-    sig = std::pow((s + a * delta.s_a).dot(z + a * delta.z_a) / s.dot(z), 3);
+    mu = 0;
+    sig = 0;
+    if (G.size() != 0)
+    {
+        mu = s.dot(z) / ns;
+        double a = fmin(linesearch(s, delta.s_a), linesearch(z, delta.z_a));
+        sig = std::pow((s + a * delta.s_a).dot(z + a * delta.z_a) / s.dot(z), 3);
+    }
 }
 void QP::combine_deltas()
 {
@@ -220,6 +251,7 @@ void QP::initialize()
     }
 
     rhs << -q, h, b;
+
     Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>> solver;
     solver.compute(A_init.sparseView());
     Eigen::VectorXd sol = solver.solve(rhs);
@@ -228,25 +260,28 @@ void QP::initialize()
     z = sol(idx_s);
     y = sol(idx_y);
 
-    auto neg_z = -z;
-    auto a_p = -(neg_z.minCoeff());
-
-    Eigen::VectorXd ones(ns);
-    ones.setConstant(1);
-
-    if (a_p < 0)
+    if (G.size() != 0)
     {
-        s = -z;
-    }
-    else
-    {
-        s = -z + (1 + a_p) * ones;
-    }
+        auto neg_z = -z;
+        auto a_p = -(neg_z.minCoeff());
 
-    auto a_d = -z.minCoeff();
-    if (a_d >= 0)
-    {
-        z += (1 + a_d) * ones;
+        Eigen::VectorXd ones(ns);
+        ones.setConstant(1);
+
+        if (a_p < 0)
+        {
+            s = -z;
+        }
+        else
+        {
+            s = -z + (1 + a_p) * ones;
+        }
+
+        auto a_d = -z.minCoeff();
+        if (a_d >= 0)
+        {
+            z += (1 + a_d) * ones;
+        }
     }
 }
 void QP::solve()
@@ -280,6 +315,7 @@ void QP::solve(bool verbose)
     double a;
     do
     {
+
         update_kkt();
         regularize_kkt();
 
@@ -301,7 +337,14 @@ void QP::solve(bool verbose)
         combine_deltas();
 
         //Update solution iterate after linesearch
-        a = fmin(1, 0.99 * fmin(linesearch(s, delta.s), linesearch(z, delta.z)));
+        if (G.size() != 0)
+        {
+            a = fmin(1, 0.99 * fmin(linesearch(s, delta.s), linesearch(z, delta.z)));
+        }
+        else
+        {
+            a = backtracking_linesearch();
+        }
         update_vars(a);
 
         if (verbose)

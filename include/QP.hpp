@@ -44,6 +44,7 @@ private:
     void rhs_kkt_c(const double sig, const double mu);
     void index_sol_c();
     double linesearch(const Eigen::VectorXd x, const Eigen::VectorXd dx);
+    double backtracking_linesearch();
     void centering_params(double &sig, double &mu);
     void combine_deltas();
     void update_vars(double a);
