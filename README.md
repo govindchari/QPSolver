@@ -11,7 +11,7 @@ QPSolver is a quadratic program solver implemented in C++ based on the [cvxgen](
 
 This solver implements the following
   * Mehrotra's predictor-corrector
-  * Permuted LDLT decomposition
+  * Permuted LDLT factorization
   * KKT system regularization
   * Iterative refinement
 
