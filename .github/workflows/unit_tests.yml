@@ -46,3 +46,10 @@ jobs:
       - name: Run Unit Tests
         run: (sh ./.github/workflows/run_tests.sh)
 
+      - name: Code Coverage
+        run: |
+          pip install --user codecov
+          codecov
+          ls build/CMakeFiles/run_tests.dir/tests/
+          bash <(curl -s https://codecov.io/bash)
+
