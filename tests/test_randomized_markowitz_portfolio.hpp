@@ -21,20 +21,27 @@ TEST_CASE("Randomized Markowitz Portfolio QP")
     // Setup problem data
     int n = 100; //Number of assets
     Eigen::MatrixXd A(1, n);
-    Eigen::MatrixXd Q(n, n);    //Return Covariance
+    Eigen::MatrixXd Q(n, n); //Return Covariance
     Eigen::MatrixXd G(n, n);
-    Eigen::VectorXd q(n);       //Expected Return
+    Eigen::VectorXd q(n); //Expected Return
     Eigen::VectorXd b(1);
     Eigen::VectorXd h(n);
 
-    A.setConstant(1);
+    
+    //Generate random return covariance matrix (PSD matrix)
     Q.setRandom();
     Q = Q.transpose() * Q;
+    Q += n * Eigen::MatrixXd::Identity(n, n);
+
+    //Generate random expected return
+    q.setRandom();
+
+    //No shorting (non-negativity constraint)
     G = -Eigen::MatrixXd::Identity(n, n);
     h.setZero(n);
 
+    A.setConstant(1);
     b << 1;
-    q.setRandom();
 
     //Set up QPSolver solver
     QP qp(Q, q, A, b, G, h);
@@ -56,14 +63,14 @@ TEST_CASE("Randomized Markowitz Portfolio QP")
     }
     qp_epi.addCostTerm(par(0.5) * x.transpose() * par(Q) * x + par(q).dot(x));
     osqp::OSQPSolver solver(qp_epi);
-    std::cout << "===============================OSQP=================================" << std::endl;    
+    std::cout << "===============================OSQP=================================" << std::endl;
     auto start2 = high_resolution_clock::now();
     solver.solve(true);
     auto stop2 = high_resolution_clock::now();
     auto time2 = duration_cast<microseconds>(stop2 - start2);
 
     //Speed Report
-    std::cout << "===========================Speed Results=============================" << std::endl;    
+    std::cout << "===========================Speed Results=============================" << std::endl;
     std::cout << "QPSolver Run Time (us):" << std::endl;
     std::cout << time1.count() << std::endl;
     std::cout << "OSQP Run Time (us):" << std::endl;
