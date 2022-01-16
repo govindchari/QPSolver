@@ -20,6 +20,7 @@ TEST_CASE("Randomized Markowitz Portfolio QP")
 
     // Setup problem data
     int n = 100; //Number of assets
+    double gamma = 0.5;
     Eigen::MatrixXd A(1, n);
     Eigen::MatrixXd Q(n, n); //Return Covariance
     Eigen::MatrixXd G(n, n);
@@ -32,6 +33,7 @@ TEST_CASE("Randomized Markowitz Portfolio QP")
     Q.setRandom();
     Q = Q.transpose() * Q;
     Q += n * Eigen::MatrixXd::Identity(n, n);
+    Q *= gamma;
 
     //Generate random expected return
     q.setRandom();
