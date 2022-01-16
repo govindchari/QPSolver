@@ -20,6 +20,22 @@ Debug:
 
 ## Installation Guide
 
+### Download
+
+Download QPSolver with the following command
+
+```
+git clone --recurse-submodules https://github.com/govindchari/QPSolver.git
+```
+
+### CMake
+To use QPSolver with a CMake project, add the following lines to your CMakeLists.txt file
+
+```
+add_subdirectory(QPSolver)
+target_link_libraries(my_library QPSolver)
+```
+
 ### Example
 ```cpp
 #include <iostream>
