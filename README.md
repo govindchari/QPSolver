@@ -60,3 +60,4 @@ int main()
 }
 
 ```
+Examples for equality only, inequality only, and unconstrained probelems can be found in [tests](tests)
