@@ -3,16 +3,19 @@
 ![Unit Tests](https://github.com/govindchari/QPSolver/actions/workflows/unit_tests.yml/badge.svg)
 
 
-A C++ solver for quadratic programs that utilizes Mehrotra's predictor-corrector algorithm.
+QPSolver is a quadratic program solver implemented in C++ based on the [cvxgen](https://stanford.edu/~boyd/papers/pdf/code_gen_impl.pdf) solver. This solver solves problems of the following form
 
-Based on cvxgen paper includes
-  - -O3 compiler optimization
-  - Permuted LDLT decomposition
-  - Iterative refinement
-  - Sparse matrices
+## Features
+This solver implements the following
+  * Mehrotra's predictor-corrector
+  * Permuted LDLT decomposition
+  * KKT system regularization
+  * Iterative refinement
 
 Debug:
   - Add #include <string.h> to top of QPSolver/tests/Epigraph/solvers/ecos/ecos_bb/ecos_bb.c
+
+## Installation Guide
 
 ### Example
 ```cpp
