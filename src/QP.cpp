@@ -34,6 +34,10 @@ QP::QP(Eigen::MatrixXd Qi, Eigen::VectorXd qi, Eigen::MatrixXd Ai, Eigen::Vector
     s.setZero(ns, 1);
     z.setZero(nz, 1);
     y.setZero(ny, 1);
+
+    //Solver status
+    converged = false;
+    max_iter_reached = false;
 }
 
 void QP::rhs_kkt_a()
@@ -122,7 +126,7 @@ double QP::backtracking_linesearch()
     Eigen::VectorXd temp5 = (Q * x + q);
     double temp6 = a * t * temp5.dot(delta.x);
 
-    while (temp1 + temp2 > temp3  + temp4 + temp6)
+    while (temp1 + temp2 > temp3 + temp4 + temp6)
     {
         a *= b;
         xkp1 = x + a * delta.x;
@@ -305,7 +309,6 @@ void QP::solve(bool verbose)
     double ineq_res = 0;
     double eq_res = 0;
     double gap = 0;
-    bool proceed = false;
 
     initialize();
     initialize_kkt();
@@ -367,11 +370,12 @@ void QP::solve(bool verbose)
         }
 
         //Evaluate stopping criteria
-        proceed = ((std::abs(Jcurr - Jprev) > tol.cost) || (eq_res > tol.constraint) || (ineq_res > tol.constraint) || (gap > tol.gap)) && (iter < 25);
+        converged = ((std::abs(Jcurr - Jprev) > tol.cost) || (eq_res > tol.constraint) || (ineq_res > tol.constraint) || (gap > tol.gap));
+        max_iter_reached = iter < 25;
 
         Jprev = Jcurr;
         iter++;
-    } while (proceed);
+    } while (converged && max_iter_reached);
 
     //Store solution
     solution.x = x;

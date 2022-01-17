@@ -59,6 +59,9 @@ public:
     SOLUTION solution;
     TOLERANCE tol;
 
+    bool converged;
+    bool max_iter_reached;
+
     QP(Eigen::MatrixXd Qi, Eigen::VectorXd qi, Eigen::MatrixXd Ai, Eigen::VectorXd bi, Eigen::MatrixXd Gi, Eigen::VectorXd hi);
 
     void solve();
