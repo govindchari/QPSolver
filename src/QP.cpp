@@ -1,3 +1,4 @@
+#define EIGEN_RUNTIME_NO_MALLOC
 #include "QP.hpp"
 #include <iostream>
 #include <Eigen/SparseCholesky>

@@ -1,4 +1,5 @@
 #pragma once
+#define EIGEN_RUNTIME_NO_MALLOC
 #include "Eigen/Dense"
 #include "Eigen/Sparse"
 #include "utilities.hpp"
