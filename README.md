@@ -74,6 +74,10 @@ int main()
 
     //Solve QP
     qp.solve(verbose);
+    
+    //Check solver status
+    std::cout << "Converged?" << std::endl;
+    std::cout << qp.converged << std::endl;
 
     //Print optimal portfolio
     std::cout << "x_opt:" << std::endl;
