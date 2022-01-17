@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/govindchari/QPSolver/branch/main/graph/badge.svg?token=KMWQNY78B6)](https://codecov.io/gh/govindchari/QPSolver)
 
 
-QPSolver is a quadratic program solver implemented in C++ based on the [cvxgen](https://stanford.edu/~boyd/papers/pdf/code_gen_impl.pdf) solver. This solver solves problems of the following form
+QPSolver is a quadratic program solver implemented in C++ based on the [cvxgen](https://stanford.edu/~boyd/papers/pdf/code_gen_impl.pdf) solver. This solver solves optimization problems of the following form
 
 <img src="https://user-images.githubusercontent.com/6196536/149648352-649501d1-2ece-4ef0-aacb-bc373be3d566.png" alt="img" width="200"/>
 
