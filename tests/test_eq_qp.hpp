@@ -39,7 +39,7 @@ TEST_CASE("Equality Constrained QP")
     QP qp(Q, q, A, b, G, h);
     std::cout << "=============================QPSolver===============================" << std::endl;
     auto start1 = high_resolution_clock::now();
-    qp.solve(true);
+    qp.solve();
     auto stop1 = high_resolution_clock::now();
     auto time1 = duration_cast<microseconds>(stop1 - start1);
 
