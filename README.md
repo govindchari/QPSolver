@@ -16,6 +16,11 @@ This solver implements the following
   * KKT system regularization
   * Iterative refinement
 
+This solver does not
+  * Check for feasibility
+  * Check for boundedness
+  * Check positive semidefiniteness of the matrix Q
+
 ## Installation Guide
 
 ### Download
